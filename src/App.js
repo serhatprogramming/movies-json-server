@@ -1,8 +1,8 @@
-import axios from "axios";
-
 import { useState, useEffect } from "react";
 
 import Movie from "./components/Movie";
+
+import movieService from "./services/movies";
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -10,8 +10,8 @@ const App = () => {
   const [releaseYear, setReleaseYear] = useState("");
   const [showWatchList, setShowWatchList] = useState(false);
   useEffect(() => {
-    axios.get("http://localhost:3001/movies").then((response) => {
-      setMovies(response.data);
+    movieService.getAll().then((movieList) => {
+      setMovies(movieList);
     });
   }, []);
 
@@ -23,17 +23,25 @@ const App = () => {
         watchList: true,
         year: parseInt(releaseYear) || null,
       };
-      axios
-        .post("http://localhost:3001/movies", newMovieObject)
-        .then((response) => {
-          setMovies([...movies, response.data]);
-          console.log(response.data);
-        });
+      movieService.create(newMovieObject).then((newMovie) => {
+        setMovies([...movies, newMovie]);
+      });
     } else {
       alert("Please enter a movie title");
     }
     setNewMovie("");
     setReleaseYear("");
+  };
+
+  const watchListUpdate = (movie) => {
+    const updatedMovie = { ...movie, watchList: !movie.watchList };
+    movieService.update(movie.id, updatedMovie).then((updatedMovie) => {
+      setMovies(
+        movies.map((movie) =>
+          movie.id === updatedMovie.id ? updatedMovie : movie
+        )
+      );
+    });
   };
 
   const handleChange = (e) => setNewMovie(e.target.value);
@@ -50,7 +58,11 @@ const App = () => {
       </button>
       <ul>
         {filteredMovies.map((movie) => (
-          <Movie key={movie.id} movie={movie} />
+          <Movie
+            key={movie.id}
+            movie={movie}
+            watchListUpdate={watchListUpdate}
+          />
         ))}
       </ul>
       <h2>Add a New Movie</h2>
