@@ -23,6 +23,53 @@
       "title": "The Dark Knight",
       "year": 2008,
       "watchList": true
+    },
+    {
+      "title": "Braveheart",
+      "watchList": true,
+      "id": 5
+    },
+    {
+      "title": "The Expandables",
+      "watchList": true,
+      "year": null,
+      "id": 6
+    },
+    {
+      "title": "Need For Speed",
+      "watchList": true,
+      "year": 2001,
+      "id": 7
+    },
+    {
+      "title": "testing",
+      "watchList": true,
+      "year": null,
+      "id": 8
+    },
+    {
+      "title": "lakjsdflk;dsf",
+      "watchList": true,
+      "year": null,
+      "id": 9
+    },
+    {
+      "title": "sdfasdf",
+      "watchList": true,
+      "year": "123",
+      "id": 10
+    },
+    {
+      "title": "asdfasdfads",
+      "watchList": true,
+      "year": null,
+      "id": 11
+    },
+    {
+      "title": "asdfasdfa",
+      "watchList": true,
+      "year": 1234123,
+      "id": 12
     }
   ]
 }

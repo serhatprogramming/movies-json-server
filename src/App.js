@@ -7,23 +7,33 @@ import Movie from "./components/Movie";
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [newMovie, setNewMovie] = useState("");
+  const [releaseYear, setReleaseYear] = useState("");
   const [showWatchList, setShowWatchList] = useState(false);
   useEffect(() => {
     axios.get("http://localhost:3001/movies").then((response) => {
       setMovies(response.data);
-      console.log(response.data);
     });
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newMovieObject = {
-      title: newMovie,
-      watchList: true,
-      id: Date.now(),
-    };
-    setMovies([...movies, newMovieObject]);
+    if (newMovie) {
+      const newMovieObject = {
+        title: newMovie,
+        watchList: true,
+        year: parseInt(releaseYear) || null,
+      };
+      axios
+        .post("http://localhost:3001/movies", newMovieObject)
+        .then((response) => {
+          setMovies([...movies, response.data]);
+          console.log(response.data);
+        });
+    } else {
+      alert("Please enter a movie title");
+    }
     setNewMovie("");
+    setReleaseYear("");
   };
 
   const handleChange = (e) => setNewMovie(e.target.value);
@@ -45,7 +55,17 @@ const App = () => {
       </ul>
       <h2>Add a New Movie</h2>
       <form onSubmit={handleSubmit}>
-        <input value={newMovie} onChange={handleChange} />
+        <input
+          value={newMovie}
+          onChange={handleChange}
+          placeholder="Movie Title"
+        />
+        <input
+          type="number"
+          value={releaseYear}
+          onChange={(e) => setReleaseYear(e.target.value)}
+          placeholder="Release Year"
+        />
         <button type="submit">Submit</button>
       </form>
     </div>
