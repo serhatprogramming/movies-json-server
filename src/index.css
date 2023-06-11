@@ -21,3 +21,32 @@ body {
   background-color: #f44336;
   color: #fff;
 }
+
+.notification {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.notification.error {
+  background-color: #ff4d4f;
+}
+
+.notification.warning {
+  background-color: #ffc53d;
+}
+
+.notification .icon {
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.notification .message {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

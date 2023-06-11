@@ -10,7 +10,7 @@
       "id": 2,
       "title": "The Godfather",
       "year": 1972,
-      "watchList": false
+      "watchList": true
     },
     {
       "id": 3,
@@ -22,23 +22,23 @@
       "id": 4,
       "title": "The Dark Knight",
       "year": 2008,
-      "watchList": true
+      "watchList": false
     },
     {
       "title": "Braveheart",
-      "watchList": true,
+      "watchList": false,
       "id": 5
     },
     {
-      "title": "The Expandables",
+      "title": "The Air",
       "watchList": false,
-      "year": null,
+      "year": 2023,
       "id": 6
     },
     {
-      "title": "Need For Speed",
+      "title": "The Air",
       "watchList": false,
-      "year": 2001,
+      "year": 2023,
       "id": 7
     }
   ]

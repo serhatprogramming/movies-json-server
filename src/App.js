@@ -4,11 +4,14 @@ import Movie from "./components/Movie";
 
 import movieService from "./services/movies";
 
+import Notification from "./components/Notification";
+
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [newMovie, setNewMovie] = useState("");
   const [releaseYear, setReleaseYear] = useState("");
   const [showWatchList, setShowWatchList] = useState(false);
+  const [notification, setNotification] = useState(null);
   useEffect(() => {
     movieService.getAll().then((movieList) => {
       setMovies(movieList);
@@ -26,8 +29,9 @@ const App = () => {
       movieService.create(newMovieObject).then((newMovie) => {
         setMovies([...movies, newMovie]);
       });
+      notify("warning", `${newMovieObject.title} added successfully`);
     } else {
-      alert("Please enter a movie title");
+      notify("error", "Please enter a movie title");
     }
     setNewMovie("");
     setReleaseYear("");
@@ -43,10 +47,18 @@ const App = () => {
             movie.id === updatedMovie.id ? updatedMovie : movie
           )
         );
+        notify(
+          "warning",
+          `${updatedMovie.title} was ${
+            updatedMovie.watchList ? "added to" : "removed from"
+          } the watch list`
+        );
       })
       .catch((error) => {
-        window.alert(`${movie.title} was deleted from the list of movies`);
-        console.log("error", error.message);
+        notify(
+          "error",
+          `${movie.title} was already deleted from the list of movies`
+        );
         setMovies(movies.filter((movie) => updatedMovie.id !== movie.id));
       });
   };
@@ -57,9 +69,17 @@ const App = () => {
     ? movies
     : movies.filter((movie) => movie.watchList);
 
+  const notify = (type, message) => {
+    setNotification({ type, message });
+    setTimeout(() => {
+      setNotification(null);
+    }, 30000);
+  };
+
   return (
     <div>
       <h1>Must Watch Movies</h1>
+      <Notification notification={notification} />
       <button onClick={() => setShowWatchList(!showWatchList)}>
         Show {!showWatchList ? "Only the Watch List" : "All Movies"}{" "}
       </button>
