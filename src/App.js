@@ -73,7 +73,7 @@ const App = () => {
     setNotification({ type, message });
     setTimeout(() => {
       setNotification(null);
-    }, 30000);
+    }, 3000);
   };
 
   return (
