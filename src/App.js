@@ -35,13 +35,20 @@ const App = () => {
 
   const watchListUpdate = (movie) => {
     const updatedMovie = { ...movie, watchList: !movie.watchList };
-    movieService.update(movie.id, updatedMovie).then((updatedMovie) => {
-      setMovies(
-        movies.map((movie) =>
-          movie.id === updatedMovie.id ? updatedMovie : movie
-        )
-      );
-    });
+    movieService
+      .update(movie.id, updatedMovie)
+      .then((updatedMovie) => {
+        setMovies(
+          movies.map((movie) =>
+            movie.id === updatedMovie.id ? updatedMovie : movie
+          )
+        );
+      })
+      .catch((error) => {
+        window.alert(`${movie.title} was deleted from the list of movies`);
+        console.log("error", error.message);
+        setMovies(movies.filter((movie) => updatedMovie.id !== movie.id));
+      });
   };
 
   const handleChange = (e) => setNewMovie(e.target.value);
